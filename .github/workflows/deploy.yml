@@ -59,8 +59,8 @@ jobs:
       - name: Retrieve Terraform output
         id: get_output
         run: |
-          echo "PEER_VPC_ID=$(terraform output -raw vpc_id)" >> $GITHUB_ENV
-          echo "PEER_SECURITY_GROUP_ID=$(terraform output -raw security_group_id)" >> $GITHUB_ENV
+          echo "PEER_VPC_ID='$(terraform output -raw vpc_id)'" >> $GITHUB_ENV
+          echo "PEER_SECURITY_GROUP_ID='$(terraform output -raw security_group_id)'" >> $GITHUB_ENV
         working-directory: 0-infra
 
   infra-1:
