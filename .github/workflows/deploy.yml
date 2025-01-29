@@ -43,6 +43,7 @@ jobs:
         uses: hashicorp/setup-terraform@v2
         with:
           cli_config_credentials_token: ${{ secrets.TF_CLI_CONFIG }}
+          terraform_wrapper: false
 
       - name: Initialize Terraform
         run: terraform init
@@ -59,8 +60,8 @@ jobs:
       - name: Retrieve Terraform output
         id: get_output
         run: |
-          echo "PEER_VPC_ID='$(terraform output -raw vpc_id)'" >> $GITHUB_ENV
-          echo "PEER_SECURITY_GROUP_ID='$(terraform output -raw security_group_id)'" >> $GITHUB_ENV
+          echo "PEER_VPC_ID='$(terraform output -raw vpc_id)'" >> $GITHUB_OUTPUT
+          echo "PEER_SECURITY_GROUP_ID='$(terraform output -raw security_group_id)'" >> $GITHUB_OUTPUT
         working-directory: 0-infra
 
   infra-1:
