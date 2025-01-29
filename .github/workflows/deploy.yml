@@ -27,7 +27,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Generate terraform.tfvars
-        working-directory: 0-service
+        working-directory: 0-infra
         run: ./generate_tfvars.sh
 
       - name: Set up Terraform
@@ -37,15 +37,15 @@ jobs:
 
       - name: Initialize Terraform
         run: terraform init
-        working-directory: 0-service
+        working-directory: 0-infra
 
       - name: Plan Terraform deployment
         run: terraform plan -out=tfplan
-        working-directory: 0-service
+        working-directory: 0-infra
 
       - name: Apply Terraform deployment
         run: terraform apply -auto-approve tfplan
-        working-directory: 0-service
+        working-directory: 0-infra
 
   infra-1:
     name: Run Terraform
@@ -63,6 +63,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Generate terraform.tfvars
+        working-directory: 1-infra
         run: ./generate_tfvars.sh
 
       - name: Set up Terraform
@@ -72,12 +73,12 @@ jobs:
 
       - name: Initialize Terraform
         run: terraform init
-        working-directory: 1-service
+        working-directory: 1-infra
 
       - name: Plan Terraform deployment
         run: terraform plan -out=tfplan
-        working-directory: 1-service
+        working-directory: 1-infra
 
       - name: Apply Terraform deployment
         run: terraform apply -auto-approve tfplan
-        working-directory: 1-service
+        working-directory: 1-infra
