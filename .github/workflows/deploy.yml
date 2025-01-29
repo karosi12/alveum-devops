@@ -25,6 +25,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+        
+      - name: Set execution permissions
+        run: chmod +x generate_tfvars.sh
 
       - name: Generate terraform.tfvars
         working-directory: 0-infra
