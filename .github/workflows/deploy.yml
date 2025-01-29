@@ -28,7 +28,7 @@ jobs:
 
       - name: Set execution permissions
         working-directory: 0-infra
-        run: ls la && chmod +x generate_tfvars.sh
+        run: ls && chmod +x generate_tfvars.sh
 
       - name: Generate terraform.tfvars
         working-directory: 0-infra
