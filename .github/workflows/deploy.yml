@@ -1,0 +1,82 @@
+name: Provision AWS Infrastructure
+
+on:
+  push:
+    branches:
+      - main
+      - ft-rds-cache
+
+jobs:
+  infra-0:
+    name: Run Terraform
+    runs-on: ubuntu-latest
+    if: contains(github.event.head_commit.message, 'infra-0')
+    env:
+      CLUSTER_IDENTIFIER: ${{ secrets.CLUSTER_IDENTIFIER }}
+      MASTER_USERNAME: ${{ secrets.MASTER_USERNAME }}
+      MASTER_PASSWORD: ${{ secrets.MASTER_PASSWORD }}
+      DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
+      PROXY_NAME: ${{ secrets.PROXY_NAME }}
+      CLUSTER_ID: ${{ secrets.CLUSTER_ID }}
+      SG_NAME: ${{ secrets.SG_NAME }}
+      VPC_NAME: ${{ secrets.VPC_NAME }}
+      RDS_PROXY_SECRET_NAME: ${{ secrets.RDS_PROXY_SECRET_NAME }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Generate terraform.tfvars
+        run: ./generate_tfvars.sh
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          cli_config_credentials_token: ${{ secrets.TF_CLI_CONFIG }}
+
+      - name: Initialize Terraform
+        run: terraform init
+        working-directory: 0-service
+
+      - name: Plan Terraform deployment
+        run: terraform plan -out=tfplan
+        working-directory: 0-service
+
+      - name: Apply Terraform deployment
+        run: terraform apply -auto-approve tfplan
+        working-directory: 0-service
+
+  infra-1:
+    name: Run Terraform
+    runs-on: ubuntu-latest
+    needs: infra-0
+
+    env:
+      RABBITMQ_PASSWORD: ${{ secrets.RABBITMQ_PASSWORD }}
+      RABBITMQ_USERNAME: ${{ secrets.RABBITMQ_USERNAME }}
+      PEER_SECURITY_GROUP_ID: ${{ secrets.PEER_SECURITY_GROUP_ID }}
+      PEER_VPC_ID: ${{ secrets.PEER_VPC_ID }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Generate terraform.tfvars
+        run: ./generate_tfvars.sh
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+            cli_config_credentials_token: ${{ secrets.TF_CLI_CONFIG }}
+
+      - name: Initialize Terraform
+        run: terraform init
+        working-directory: 1-service
+
+      - name: Plan Terraform deployment
+        run: terraform plan -out=tfplan
+        working-directory: 1-service
+
+      - name: Apply Terraform deployment
+        run: terraform apply -auto-approve tfplan
+        working-directory: 1-service
