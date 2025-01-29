@@ -1,0 +1,15 @@
+# Terraform directory
+0-infra/.terraform.*
+0-infra/.terraform
+0-infra/terraform.*
+1-infra/.terraform.*
+1-infra/.terraform
+1-infra/terraform.*
+
+# Lambda function 
+2-function/node_modules
+
+###Some local files use for debugging##
+note.md
+rabbitmq.tf
+variable-data.txt

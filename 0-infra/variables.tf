@@ -1,0 +1,9 @@
+variable "master_username" {}
+variable "master_password" {}
+variable "database_name" {}
+variable "proxy_name" {}
+variable "cluster_identifier" {}
+variable "cluster_id" {}
+variable "sg_name" {}
+variable "vpc_name" {}
+variable "rds_proxy_secret_name" {}
