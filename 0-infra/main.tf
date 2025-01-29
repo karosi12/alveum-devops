@@ -1,7 +1,16 @@
 provider "aws" {
-  region     = "us-west-2" # Change this to your desired region
+  region = var.region # Change this to your desired region
   access_key = var.access_key
   secret_key = var.secret_key
+}
+
+terraform {
+  backend "s3" {
+    bucket  = "terraform-state-demo-10"
+    key     = "infra-0/terraform.tfstate"
+    region  = "us-west-2"
+    encrypt = true
+  }
 }
 
 module "vpc" {

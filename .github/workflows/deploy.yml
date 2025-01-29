@@ -10,7 +10,7 @@ jobs:
   infra-0:
     name: Run Terraform infra-0
     runs-on: ubuntu-latest
-    
+
     env:
       CLUSTER_IDENTIFIER: ${{ secrets.CLUSTER_IDENTIFIER }}
       MASTER_USERNAME: ${{ secrets.MASTER_USERNAME }}
@@ -23,8 +23,7 @@ jobs:
       RDS_PROXY_SECRET_NAME: ${{ secrets.RDS_PROXY_SECRET_NAME }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      PEER_VPC_ID: ""
-      PEER_SECURITY_GROUP_ID: ""
+      REGION: ${{ vars.REGION }}
 
     steps:
       - name: Checkout repository
@@ -70,10 +69,11 @@ jobs:
     env:
       RABBITMQ_PASSWORD: ${{ secrets.RABBITMQ_PASSWORD }}
       RABBITMQ_USERNAME: ${{ secrets.RABBITMQ_USERNAME }}
-      PEER_SECURITY_GROUP_ID: ${{ env.PEER_SECURITY_GROUP_ID }}
-      PEER_VPC_ID: ${{ env.PEER_VPC_ID }}
+      PEER_SECURITY_GROUP_ID: ${{ vars.PEER_SECURITY_GROUP_ID }}
+      PEER_VPC_ID: ${{ vars.PEER_VPC_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      REGION: ${{ vars.REGION }}
 
     steps:
       - name: Checkout repository

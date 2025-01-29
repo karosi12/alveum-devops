@@ -9,3 +9,4 @@ variable "vpc_name" {}
 variable "rds_proxy_secret_name" {}
 variable "secret_key" {}
 variable "access_key" {}
+variable "region" {}

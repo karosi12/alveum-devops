@@ -4,6 +4,15 @@ provider "aws" {
   secret_key = var.secret_key
 }
 
+terraform {
+  backend "s3" {
+    bucket         = "terraform-state-demo-10"
+    key            = "infra-1/terraform.tfstate"
+    region         = "us-west-2"
+    encrypt        = true
+  }
+}
+
 module "vpc" {
   source             = "./modules/vpc"
   vpc_name           = "rabbitmq-vpc"

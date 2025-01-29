@@ -12,4 +12,5 @@ vpc_name = "$VPC_NAME"
 rds_proxy_secret_name = "$RDS_PROXY_SECRET_NAME"
 access_key = "$AWS_ACCESS_KEY_ID"
 secret_key = "$AWS_SECRET_ACCESS_KEY"
+region = "$REGION"
 EOF
