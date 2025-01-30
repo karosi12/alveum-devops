@@ -1,0 +1,27 @@
+service: serverless-app
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  region: us-west-2
+
+functions:
+  saveData:
+    handler: handler.saveData
+    events:
+      - http:
+          path: save
+          method: post
+    environment:
+      RDS_HOST:  ${env:RDS_HOST}
+      RDS_USER: ${env:RDS_USER}
+      RDS_PASSWORD: ${env:RDS_PASSWORD}
+      RDS_DB_NAME: ${env:RDS_DB_NAME}
+      REDIS_HOST: ${env:REDIS_HOST}
+      REDIS_PORT: ${env:REDIS_PORT}
+      RABBITMQ_URL: ${env:RABBITMQ_URL}
+      SECURITY_GROUP_ID: ${env:SECURITY_GROUP_ID}
+      VPC_ID: ${env:VPC_ID}
+
+plugins:
+  - serverless-plugin-warmup
