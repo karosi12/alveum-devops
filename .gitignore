@@ -13,3 +13,6 @@
 note.md
 rabbitmq.tf
 variable-data.txt
+0-infra/tfplan
+1-infra/tfplan
+text.tf

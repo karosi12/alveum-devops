@@ -1,15 +1,15 @@
 provider "aws" {
-  region     = "us-west-2" # Change to your desired region
+  region = var.region # Change to your desired region
   access_key = var.access_key
   secret_key = var.secret_key
 }
 
 terraform {
   backend "s3" {
-    bucket         = "terraform-state-demo-10"
-    key            = "infra-1/terraform.tfstate"
-    region         = "us-west-2"
-    encrypt        = true
+    bucket  = "terraform-state-demo-10"
+    key     = "infra-1/terraform.tfstate"
+    region  = "us-west-2"
+    encrypt = true
   }
 }
 
